@@ -95,8 +95,19 @@ public class LevelParser {
 	
 	public void drawTiles( Graphics g ){
 		for( Sprite s : tileArray ){
-			g.drawImage(s.getImage(), s.getX(), s.getY(), getTileWidth(), getTileHeight(), getApplet());
+			
+			if( onScreen( s, applet ) ){
+				g.drawImage(s.getImage(), s.getX(), s.getY(), getTileWidth(), getTileHeight(), getApplet());
+			}
 		}
+	}
+	
+	boolean onScreen(Sprite spr, Applet applet){
+		if ( spr.getX() < applet.getWidth() && spr.getY() < applet.getHeight() ){
+			return true;
+		}
+		
+		return false;
 	}
 	
 	/* Parsing */
@@ -166,7 +177,7 @@ public class LevelParser {
 		}
 	}
 	
-	public void parseLine( String line, int count ){
+	void parseLine( String line, int count ){
 		int x = 0, y = count;
 		
 		for( int i = 0; i < line.length(); i++){
