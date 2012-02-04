@@ -1,6 +1,7 @@
 package pro;
 
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.Point;
 
 /**
@@ -11,18 +12,52 @@ public class Sprite {
 	
 	Point position;
 	Dimension size;
+	Image image;
 	
-	public Sprite( Point pos, Dimension size ){
-		setPosition(pos);
-		setSize(size);
+	public Sprite(Point position, Dimension size, Image image) {
+		super();
+		this.position = position;
+		this.size = size;
+		this.image = image;
 	}
 	
+	
+	public Sprite(Point position, Dimension size) {
+		super();
+		this.position = position;
+		this.size = size;
+	}
+	
+	public Sprite(Point position, Image image) {
+		super();
+		this.position = position;
+		this.image = image;
+	}
+
+
+	public Sprite(Point position) {
+		super();
+		this.position = position;
+	}
+
 	public Sprite( int x, int y ){
 		setPosition( new Point(x,y) );
 	}
 	
 	public Sprite( int x, int y, int w, int h ){
 		this( new Point(x,y), new Dimension(w,h) );
+	}
+	
+	public Sprite( int x, int y, Image img ){
+		this( new Point(x,y), img );
+	}
+
+	public Image getImage() {
+		return image;
+	}
+
+	public void setImage(Image image) {
+		this.image = image;
 	}
 
 	public Point getPosition() {

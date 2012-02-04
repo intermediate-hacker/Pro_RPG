@@ -9,7 +9,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 
 
-public class MainApp extends RenderApplet implements Runnable {
+public class MainApp extends KeyHandlerApplet {
 	
 	/* constants */
 	long FPS = 60;
@@ -17,9 +17,7 @@ public class MainApp extends RenderApplet implements Runnable {
 	
 	/* members */
 	Thread thread;
-	
-	Image ball_img;
-	Sprite ball;
+	LevelParser levelParser = new LevelParser(20,20,this);
 	
 	/** singleton code **/
 	static MainApp instance;
@@ -32,17 +30,14 @@ public class MainApp extends RenderApplet implements Runnable {
 	/* override methods */
 	
 	/* Applet - Loop */
-	@Override
-	public void init(){
-		setSize(300, 300);
-		ball_img = getImage( getCodeBase(), "rider.png" );
-		ball = new Sprite( 20, 20 );
-	}
 	
 	@Override 
 	public void start(){
 		thread = new Thread( this );
 		thread.start();
+		
+		levelParser.parseTileMapping("mapping.txt");
+		levelParser.parseLevel("level_1.txt");
 	}
 	
 	@Override 
@@ -55,24 +50,20 @@ public class MainApp extends RenderApplet implements Runnable {
 	public void paint(Graphics g){
 		super.paint(g);
 		
-		g.drawString("Frame: " + FRAME, 20, 20);
-		g.drawImage(ball_img, ball.getX(), ball.getY(), null);
-	}
-	
-	/* Applet - Input */
-	@Override
-	public boolean keyDown(Event e, int key){
-		if ( key == Event.LEFT ) ball.move(-5, 0);
-		if ( key == Event.RIGHT ) ball.move(5, 0);
+		Sprite ball = getBall();
 		
-		return true;
+		levelParser.drawTiles(g); 
+		g.drawImage( ball.getImage(), ball.getX(), ball.getY(), null);
 	}
 	
 	/* Runnable */
 	
 	@Override 
 	public void run(){
+		
 		while( Thread.currentThread() == thread ){
+			super.run();
+			
 			repaint();
 			try{
 				Thread.sleep( 1000 / FPS );
