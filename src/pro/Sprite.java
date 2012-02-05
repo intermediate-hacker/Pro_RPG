@@ -12,8 +12,10 @@ import java.awt.Point;
  */
 public class Sprite {
 	
-	/* membars */
+	/* members */
 	Point position;
+	Point vector = new Point(0,0);
+	
 	Dimension size;
 	Image image;
 	Applet applet;
@@ -28,15 +30,14 @@ public class Sprite {
 	
 	
 	public Sprite(Point position, Dimension size) {
-		super();
-		this.position = position;
-		this.size = size;
+		this( position, size, null );
 	}
 	
 	public Sprite(Point position, Image image) {
-		super();
-		this.position = position;
-		this.image = image;
+		this( position, 
+				new Dimension( image.getWidth( null ), image.getHeight( null ) ),
+				image
+				);
 	}
 
 
@@ -58,6 +59,8 @@ public class Sprite {
 	}
 
 	/* Getters / Setters */
+	
+	/* Image */
 	public Image getImage() {
 		return image;
 	}
@@ -66,6 +69,7 @@ public class Sprite {
 		this.image = image;
 	}
 
+	/* Position */
 	public Point getPosition() {
 		return position;
 	}
@@ -90,6 +94,7 @@ public class Sprite {
 		position.y = y;
 	}
 
+	/* Size */
 	public Dimension getSize() {
 		return size;
 	}
@@ -98,12 +103,80 @@ public class Sprite {
 		this.size = size;
 	}
 	
-	public double getWidth(){
-		return size.getWidth();
+	public int getWidth(){
+		return size.width;
 	}
 	
-	public double getHeight(){
-		return size.getHeight();
+	public int getHeight(){
+		return size.height;
+	}
+	
+	/* Rect */
+	public void setTop(int arg0){
+		setY(arg0);
+	}
+	
+	public int getTop(){
+		return getY();
+	}
+	
+	public void setBottom(int arg0){
+		setY( arg0 - getWidth() );
+	}
+	
+	public int getBottom(){
+		return getY() + getWidth();
+	}
+
+	public void setRight(int arg0){
+		setY( arg0 - getWidth() );
+	}
+	
+	public int getRight(){
+		return getY() + getWidth();
+	}
+	
+	public void setLeft(int arg0){
+		setY(arg0);
+	}
+	
+	public int getLeft(){
+		return getY();
+	}
+	
+	/* Movement */
+	public Point getVector() {
+		return vector;
+	}
+
+	public void setVector(Point vector) {
+		this.vector = vector;
+	}
+	
+	public void setVectorX(int x){
+		this.vector.x = x;
+	}
+	
+	public int getVectorX(){
+		return vector.x;
+	}
+	
+	public void setVectorY(int y){
+		this.vector.y = y;
+	}
+	
+	public int getVectorY(){
+		return vector.y;
+	}
+
+	/* Other */
+	public Applet getApplet() {
+		return applet;
+	}
+
+
+	public void setApplet(Applet applet) {
+		this.applet = applet;
 	}
 	
 	/* Methods */
@@ -117,6 +190,15 @@ public class Sprite {
 	}
 	
 	public boolean draw(Graphics g){
+		return false;
+	}
+	
+	public boolean isCollidingRect( Sprite s ){
+		if ( getRight() > s.getLeft() 
+			&& getLeft() < s.getRight()
+			&& getBottom() > s.getTop()
+			&& getTop() < s.getBottom() ) 
+			return true;
 		return false;
 	}
 }

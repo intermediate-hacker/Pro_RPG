@@ -8,7 +8,7 @@ import java.awt.event.KeyListener;
 
 public class KeyHandlerApplet extends RenderApplet implements KeyListener, Runnable {
 	
-	boolean LEFT = false, RIGHT = false;
+	boolean LEFT = false, RIGHT = false, K_A = false;
 	
 	AstroSprite astro;
 	
@@ -27,7 +27,7 @@ public class KeyHandlerApplet extends RenderApplet implements KeyListener, Runna
 		setSize(300, 300);
 		addKeyListener(this);
 		
-		astro = new AstroSprite(40,00, getImage( getCodeBase(), "astro_1.png" ));
+		astro = new AstroSprite(40,160, getImage( getCodeBase(), "astro_1.png" ));
 	}
 	
 	/* RenderApplet */
@@ -66,6 +66,10 @@ public class KeyHandlerApplet extends RenderApplet implements KeyListener, Runna
 		else if (key == KeyEvent.VK_RIGHT){
 			RIGHT = true;
 			LEFT = false;
+		}
+		
+		else if (key == KeyEvent.VK_A){
+			K_A = true;
 		}
 	}
 	

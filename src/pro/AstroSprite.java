@@ -9,12 +9,23 @@ import java.awt.Point;
 public class AstroSprite extends Sprite {
 	
 	int frame = 20;
-	public static final int LEFT = 0, RIGHT = 1;
+	public static final int LEFT = 0, RIGHT = 1, UP = 2, DOWN = 3;
+	
 	int direction = LEFT;
 	boolean moving = false;
 	
+	LevelParser levelParser;
+	
 	/* Getters / Setters */
 	
+	public LevelParser getLevelParser() {
+		return levelParser;
+	}
+
+	public void setLevelParser(LevelParser levelParser) {
+		this.levelParser = levelParser;
+	}
+
 	public boolean isMoving() {
 		return moving;
 	}
@@ -49,21 +60,26 @@ public class AstroSprite extends Sprite {
 		
 		String dir;
 		
-		int dx = 0;
+		setVectorX(0);
 		if (direction == LEFT){
 			dir = "left_";
-			dx = -2;
+			setVectorX(-2);
 		}
-		else{
+		else {
 			dir = "right_";
-			dx = 2;
+			setVectorX(2);
 		}
 		
 		int current = 2;
 		if ( isMoving() ){
 			current = frame/10;
-			move(dx,0);
 		}
+		else{
+			setVectorX(0);
+		}
+		
+		move( getVectorX(), getVectorY() );
+		levelParser.checkCollision(this);
 		
 		setImage( app.getImage( app.getCodeBase(), "astro_" + dir + current + ".png" ) );
 		

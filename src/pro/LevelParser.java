@@ -4,6 +4,7 @@ import java.applet.Applet;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Point;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -89,6 +90,19 @@ public class LevelParser {
 	
 	public void setTileHeight(int h){
 		this.tileSize.height = h;
+	}
+	
+	/* Collision Detection */
+	
+	public boolean checkCollision( Sprite plyr ){
+		for( Sprite s : tileArray ){
+			if ( plyr.isCollidingRect(s) ){
+				if (plyr.getVectorY() < 0) plyr.setTop( s.getBottom() );
+				else if (plyr.getVectorY() > 0) plyr.setBottom(s.getTop());
+			}
+		}
+		
+		return false;
 	}
 	
 	/* Drawing */
@@ -201,7 +215,9 @@ public class LevelParser {
 			}
 			
 			if ( img != null ){
-				tileArray.add( new Sprite( x * getTileWidth(), y * getTileHeight(), img ));
+				tileArray.add( new Sprite( new Point( x * getTileWidth(), y * getTileHeight()),
+											new Dimension(getTileWidth(), getTileHeight()),
+											img ));
 			}
 			
 			x++;
