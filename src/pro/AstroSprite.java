@@ -11,9 +11,18 @@ public class AstroSprite extends Sprite {
 	int frame = 20;
 	public static final int LEFT = 0, RIGHT = 1;
 	int direction = LEFT;
+	boolean moving = false;
 	
 	/* Getters / Setters */
 	
+	public boolean isMoving() {
+		return moving;
+	}
+
+	public void setMoving(boolean moving) {
+		this.moving = moving;
+	}
+
 	public int getFrame() {
 		return frame;
 	}
@@ -36,14 +45,27 @@ public class AstroSprite extends Sprite {
 	public void update(Applet app){
 		
 		frame++;
-		if ( frame > 60 ) frame = 20;
+		if ( frame > 30 ) frame = 10;
 		
 		String dir;
 		
-		if (direction == LEFT) dir = "left_";
-		else dir = "right_";
+		int dx = 0;
+		if (direction == LEFT){
+			dir = "left_";
+			dx = -2;
+		}
+		else{
+			dir = "right_";
+			dx = 2;
+		}
 		
-		setImage( app.getImage( app.getCodeBase(), "astro_" + dir + frame/20 + ".png" ) );
+		int current = 2;
+		if ( isMoving() ){
+			current = frame/10;
+			move(dx,0);
+		}
+		
+		setImage( app.getImage( app.getCodeBase(), "astro_" + dir + current + ".png" ) );
 		
 		
 	}

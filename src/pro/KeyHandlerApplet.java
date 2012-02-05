@@ -40,11 +40,15 @@ public class KeyHandlerApplet extends RenderApplet implements KeyListener, Runna
 	
 	@Override
 	public void run(){
+		astro.setMoving(true);
 		if (LEFT){
 			astro.setDirection( AstroSprite.LEFT );
 		}
 		else if (RIGHT){
 			astro.setDirection( AstroSprite.RIGHT );
+		}
+		else{
+			astro.setMoving(false);
 		}
 	}
 	

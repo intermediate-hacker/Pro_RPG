@@ -4,6 +4,7 @@ package pro;
  * @author Muhammad Ahmad Tirmazi
  */
 
+import java.awt.Color;
 import java.awt.Event;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -33,6 +34,8 @@ public class MainApp extends KeyHandlerApplet {
 	
 	@Override 
 	public void start(){
+		this.setBackground(Color.black);
+		
 		thread = new Thread( this );
 		thread.start();
 		
