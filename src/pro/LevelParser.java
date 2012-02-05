@@ -97,7 +97,16 @@ public class LevelParser {
 		for( Sprite s : tileArray ){
 			
 			if( onScreen( s, applet ) ){
+				if ( ! s.draw(g) )
 				g.drawImage(s.getImage(), s.getX(), s.getY(), getTileWidth(), getTileHeight(), getApplet());
+			}
+		}
+	}
+	
+	public void updateTiles(){
+		for( Sprite s : tileArray ){
+			if ( onScreen( s, applet ) ){
+				s.update(applet);
 			}
 		}
 	}

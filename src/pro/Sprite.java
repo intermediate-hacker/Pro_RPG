@@ -1,6 +1,8 @@
 package pro;
 
+import java.applet.Applet;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 
@@ -10,10 +12,13 @@ import java.awt.Point;
  */
 public class Sprite {
 	
+	/* membars */
 	Point position;
 	Dimension size;
 	Image image;
+	Applet applet;
 	
+	/* Constructors */
 	public Sprite(Point position, Dimension size, Image image) {
 		super();
 		this.position = position;
@@ -52,6 +57,7 @@ public class Sprite {
 		this( new Point(x,y), img );
 	}
 
+	/* Getters / Setters */
 	public Image getImage() {
 		return image;
 	}
@@ -100,8 +106,17 @@ public class Sprite {
 		return size.getHeight();
 	}
 	
+	/* Methods */
 	public void move(int dx, int dy){
 		position.x += dx;
 		position.y += dy;
+	}
+	
+	public void update(Applet app){
+		
+	}
+	
+	public boolean draw(Graphics g){
+		return false;
 	}
 }

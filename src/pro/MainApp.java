@@ -50,10 +50,9 @@ public class MainApp extends KeyHandlerApplet {
 	public void paint(Graphics g){
 		super.paint(g);
 		
-		Sprite ball = getBall();
+		levelParser.drawTiles(g);
 		
-		levelParser.drawTiles(g); 
-		g.drawImage( ball.getImage(), ball.getX(), ball.getY(), null);
+		getAstro().draw(g);
 	}
 	
 	/* Runnable */
@@ -73,6 +72,8 @@ public class MainApp extends KeyHandlerApplet {
 			
 			/* increment the frame */
 			FRAME++;
+			
+			getAstro().update(this);
 		}
 	}
 	

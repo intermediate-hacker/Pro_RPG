@@ -8,17 +8,26 @@ import java.awt.event.KeyListener;
 
 public class KeyHandlerApplet extends RenderApplet implements KeyListener, Runnable {
 	
-	Sprite ball;
-	
 	boolean LEFT = false, RIGHT = false;
 	
+	AstroSprite astro;
+	
+	/* Getters / Setters */
+	
+	public AstroSprite getAstro() {
+		return astro;
+	}
+
+	public void setAstro(AstroSprite astro) {
+		this.astro = astro;
+	}
+
 	/* Applet */
 	public void init(){
 		setSize(300, 300);
 		addKeyListener(this);
 		
-		Image img = getImage( getCodeBase(), "rider_down_1.gif" );
-		ball = new Sprite( 20, 20, img );
+		astro = new AstroSprite(40,00, getImage( getCodeBase(), "astro_1.png" ));
 	}
 	
 	/* RenderApplet */
@@ -32,12 +41,10 @@ public class KeyHandlerApplet extends RenderApplet implements KeyListener, Runna
 	@Override
 	public void run(){
 		if (LEFT){
-			//ball.setImage( getImage( getCodeBase(), "pikachu_surfing_left.gif" ) );
-			ball.move(-4, 0);
+			astro.setDirection( AstroSprite.LEFT );
 		}
 		else if (RIGHT){
-			//ball.setImage( getImage( getCodeBase(), "pikachu_surfing_right.gif" ) );
-			ball.move(4, 0);
+			astro.setDirection( AstroSprite.RIGHT );
 		}
 	}
 	
@@ -76,13 +83,5 @@ public class KeyHandlerApplet extends RenderApplet implements KeyListener, Runna
 	public void keyTyped(KeyEvent arg0) {
 		// TODO Auto-generated method stub
 		
-	}
-	
-	/* Getters / Setters */
-	public Sprite getBall() {
-		return ball;
-	}
-	public void setBall(Sprite ball) {
-		this.ball = ball;
 	}
 }
