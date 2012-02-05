@@ -1,11 +1,11 @@
-# Hello World!BBBBBBBBBBBBBB
-B
-B                                   B
-B
-B  BBB   B     B        B
+# Hello World!
+$ 2 = block_1.gif
+$ B = block_1.gif
 
 
+2222
 
+           2222222222
 
-
-BBBBBBBBBBBBBBBBBBBBB
+ BB
+            2

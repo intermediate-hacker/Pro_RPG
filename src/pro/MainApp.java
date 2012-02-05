@@ -40,7 +40,6 @@ public class MainApp extends KeyHandlerApplet {
 		thread.start();
 		
 		getAstro().setLevelParser(levelParser);
-		levelParser.parseTileMapping("mapping.txt");
 		levelParser.parseLevel("level_1.txt");
 	}
 	

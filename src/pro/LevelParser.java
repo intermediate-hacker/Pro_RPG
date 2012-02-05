@@ -96,9 +96,12 @@ public class LevelParser {
 	
 	public boolean checkCollision( Sprite plyr ){
 		for( Sprite s : tileArray ){
-			if ( plyr.isCollidingRect(s) ){
+			if ( s.isCollidingRect(plyr) ){
+				
 				if (plyr.getVectorY() < 0) plyr.setTop( s.getBottom() );
-				else if (plyr.getVectorY() > 0) plyr.setBottom(s.getTop());
+				else if (plyr.getVectorY() > 0) plyr.setBottom( s.getTop() );
+				else if (plyr.getVectorX() < 0) plyr.setLeft( s.getRight() );
+				else if (plyr.getVectorX() > 0) plyr.setRight( s.getLeft() );
 			}
 		}
 		
@@ -145,13 +148,11 @@ public class LevelParser {
 			
 			while( (line = reader.readLine()) != null ){
 				
-				if (! line.startsWith("#")){
-					
+				if (line.startsWith("$")){
 					String[] tmp = line.split("=");
 					
-					tileMapping.put( tmp[0].trim().charAt(0), tmp[1].trim() );
-					System.out.println( tmp[0].trim().charAt(0) + "{}" +  tmp[1].trim() );
-					
+					String p = tmp[0].substring(1).trim();
+					tileMapping.put( p.charAt(0), tmp[1].trim() );
 				}
 				
 			}
@@ -167,6 +168,8 @@ public class LevelParser {
 	
 	/* Level */
 	public void parseLevel( String filename ){
+		
+		parseTileMapping( filename );
 		
 		BufferedReader reader;
 		try{
@@ -189,7 +192,7 @@ public class LevelParser {
 			int count = 1;
 			while( (line = reader.readLine()) != null){
 				
-				if( ! line.startsWith("#")){
+				if( ! line.startsWith("#") && ! line.startsWith("$") ){
 					parseLine( line, count++ );
 				}
 			}
@@ -208,16 +211,19 @@ public class LevelParser {
 			char c = line.charAt(i);
 			Image img = null;
 			
-			for( Entry<Character, String> entry : tileMapping.entrySet() ){
-				if ( entry.getKey() == c ){
-					img = applet.getImage( applet.getCodeBase(), entry.getValue() );
-				}
+			if (tileMapping.containsKey(c)){
+				img = applet.getImage( applet.getCodeBase(), tileMapping.get(c));
 			}
 			
 			if ( img != null ){
-				tileArray.add( new Sprite( new Point( x * getTileWidth(), y * getTileHeight()),
-											new Dimension(getTileWidth(), getTileHeight()),
-											img ));
+				
+				Sprite s = new Sprite( new Point( x * getTileWidth(), y * getTileHeight() ),
+						               new Dimension( getTileWidth(), getTileHeight() ),
+						               img);
+				
+				if ( Character.isDigit(c)) s.setCollideable(false);
+				
+				tileArray.add( s );
 			}
 			
 			x++;

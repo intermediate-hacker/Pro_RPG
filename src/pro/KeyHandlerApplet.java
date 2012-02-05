@@ -1,7 +1,7 @@
 package pro;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -27,7 +27,7 @@ public class KeyHandlerApplet extends RenderApplet implements KeyListener, Runna
 		setSize(300, 300);
 		addKeyListener(this);
 		
-		astro = new AstroSprite(40,160, getImage( getCodeBase(), "astro_1.png" ));
+		astro = new AstroSprite( new Point(40,160), new Dimension(21,29), getImage( getCodeBase(), "astro_1.png" ));
 	}
 	
 	/* RenderApplet */

@@ -20,7 +20,10 @@ public class Sprite {
 	Image image;
 	Applet applet;
 	
+	boolean collideable = true;
+
 	/* Constructors */
+	
 	public Sprite(Point position, Dimension size, Image image) {
 		super();
 		this.position = position;
@@ -129,19 +132,19 @@ public class Sprite {
 	}
 
 	public void setRight(int arg0){
-		setY( arg0 - getWidth() );
+		setX( arg0 - getWidth() );
 	}
 	
 	public int getRight(){
-		return getY() + getWidth();
+		return getX() + getWidth();
 	}
 	
 	public void setLeft(int arg0){
-		setY(arg0);
+		setX(arg0);
 	}
 	
 	public int getLeft(){
-		return getY();
+		return getX();
 	}
 	
 	/* Movement */
@@ -179,6 +182,14 @@ public class Sprite {
 		this.applet = applet;
 	}
 	
+	public boolean isCollideable() {
+		return collideable;
+	}
+
+	public void setCollideable(boolean collideable) {
+		this.collideable = collideable;
+	}
+	
 	/* Methods */
 	public void move(int dx, int dy){
 		position.x += dx;
@@ -194,11 +205,16 @@ public class Sprite {
 	}
 	
 	public boolean isCollidingRect( Sprite s ){
-		if ( getRight() > s.getLeft() 
-			&& getLeft() < s.getRight()
-			&& getBottom() > s.getTop()
-			&& getTop() < s.getBottom() ) 
-			return true;
+		if ( isCollideable() ){
+			if ( getRight() > s.getLeft() 
+				&& getLeft() < s.getRight()
+				&& getBottom() > s.getTop() 
+				&& getTop() < s.getBottom()){
+				return true;
+			}
+		}
+		
+		System.out.print(isCollideable());
 		return false;
 	}
 }
