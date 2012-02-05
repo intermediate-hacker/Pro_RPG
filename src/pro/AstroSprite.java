@@ -65,9 +65,17 @@ public class AstroSprite extends Sprite {
 			dir = "left_";
 			setVectorX(-2);
 		}
-		else {
+		else if (direction == RIGHT){
 			dir = "right_";
 			setVectorX(2);
+		}
+		else if(direction == UP){
+			dir = "up_";
+			setVectorY(-2);
+		}
+		else{
+			dir = "down_";
+			setVectorY(2);
 		}
 		
 		int current = 2;
@@ -76,10 +84,11 @@ public class AstroSprite extends Sprite {
 		}
 		else{
 			setVectorX(0);
+			setVectorY(0);
 		}
 		
 		move( getVectorX(), getVectorY() );
-		levelParser.checkCollision(this);
+		//levelParser.checkCollision(this);
 		
 		setImage( app.getImage( app.getCodeBase(), "astro_" + dir + current + ".png" ) );
 		

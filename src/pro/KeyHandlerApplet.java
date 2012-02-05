@@ -8,7 +8,7 @@ import java.awt.event.KeyListener;
 
 public class KeyHandlerApplet extends RenderApplet implements KeyListener, Runnable {
 	
-	boolean LEFT = false, RIGHT = false, K_A = false;
+	boolean LEFT = false, RIGHT = false, UP = false, DOWN = false, K_A = false;
 	
 	AstroSprite astro;
 	
@@ -47,6 +47,13 @@ public class KeyHandlerApplet extends RenderApplet implements KeyListener, Runna
 		else if (RIGHT){
 			astro.setDirection( AstroSprite.RIGHT );
 		}
+		else if (UP){
+			astro.setDirection( AstroSprite.UP );
+		}
+		else if (DOWN){
+			astro.setDirection( AstroSprite.DOWN );
+		}
+		
 		else{
 			astro.setMoving(false);
 		}
@@ -58,14 +65,32 @@ public class KeyHandlerApplet extends RenderApplet implements KeyListener, Runna
 	public void keyPressed( KeyEvent e ){
 		int key = e.getKeyCode();
 		
-		if ( key == KeyEvent.VK_LEFT ){
-			LEFT = true;
-			RIGHT = false;
+		if ( key == KeyEvent.VK_UP ){
+			if (!DOWN){
+				resetMoves();
+				UP = true;
+			}
+			
+		}
+		
+		else if ( key == KeyEvent.VK_DOWN ){
+			if (!UP){
+				resetMoves();
+				DOWN = true;
+			}
+		}
+		else if ( key == KeyEvent.VK_LEFT ){
+			if (!RIGHT){
+				resetMoves();
+				LEFT = true;
+			}
 		}
 		
 		else if (key == KeyEvent.VK_RIGHT){
-			RIGHT = true;
-			LEFT = false;
+			if (!LEFT){
+				resetMoves();
+				RIGHT = true;
+			}
 		}
 		
 		else if (key == KeyEvent.VK_A){
@@ -85,6 +110,14 @@ public class KeyHandlerApplet extends RenderApplet implements KeyListener, Runna
 			RIGHT = false;
 		}
 		
+		else if ( key == KeyEvent.VK_UP ){
+			UP = false;
+		}
+		
+		else if (key == KeyEvent.VK_DOWN ){
+			DOWN = false;
+		}
+		
 	}
 
 	@Override
@@ -92,4 +125,19 @@ public class KeyHandlerApplet extends RenderApplet implements KeyListener, Runna
 		// TODO Auto-generated method stub
 		
 	}
+	
+	boolean alreadyMoving(){
+		if ( UP || DOWN || LEFT || RIGHT ){
+			return true;
+		}
+		return false;
+	}
+	
+	void resetMoves(){
+		UP = false;
+		DOWN = false;
+		LEFT = false;
+		RIGHT = false;
+	}
 }
+
