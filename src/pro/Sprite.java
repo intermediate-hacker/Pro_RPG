@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 
+import javax.swing.JPanel;
+
 /**
  * @author Muhammad Ahmad Tirmazi
  *
@@ -196,7 +198,7 @@ public class Sprite {
 		position.y += dy;
 	}
 	
-	public void update(Applet app){
+	public void update(JPanel app){
 		
 	}
 	
@@ -214,7 +216,6 @@ public class Sprite {
 			}
 		}
 		
-		System.out.print(isCollideable());
 		return false;
 	}
 }

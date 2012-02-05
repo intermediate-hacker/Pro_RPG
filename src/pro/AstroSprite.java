@@ -1,10 +1,12 @@
 package pro;
 
-import java.applet.Applet;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.Toolkit;
+
+import javax.swing.JPanel;
 
 public class AstroSprite extends Sprite {
 	
@@ -53,7 +55,7 @@ public class AstroSprite extends Sprite {
 	/* Overrides */
 	
 	@Override
-	public void update(Applet app){
+	public void update(JPanel app){
 		
 		frame++;
 		if ( frame > 30 ) frame = 10;
@@ -90,7 +92,7 @@ public class AstroSprite extends Sprite {
 		move( getVectorX(), getVectorY() );
 		levelParser.checkCollision(this);
 		
-		setImage( app.getImage( app.getCodeBase(), "astro_" + dir + current + ".png" ) );
+		setImage( Toolkit.getDefaultToolkit().getImage( "astro_" + dir + current + ".png" ) );
 		
 		
 	}

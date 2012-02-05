@@ -1,10 +1,10 @@
 package pro;
 
-import java.applet.Applet;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.Toolkit;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -13,23 +13,24 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
+
+import javax.swing.JPanel;
 
 public class LevelParser {
 	List<Sprite> tileArray = new ArrayList<Sprite>();
 	Map<Character, String> tileMapping = new HashMap<Character, String>();
 	Dimension tileSize;
-	Applet applet;
+	JPanel frame;
 
 	/* Constructors */
 	
-	public LevelParser(Dimension tileSize, Applet applet) {
+	public LevelParser(Dimension tileSize, JPanel frame) {
 		super();
 		this.tileSize = tileSize;
-		this.applet = applet;
+		this.frame = frame;
 	}
 	
-	public LevelParser( int w, int h, Applet applet ){
+	public LevelParser( int w, int h, JPanel applet ){
 		this( new Dimension(w,h), applet );
 	}
 
@@ -68,12 +69,12 @@ public class LevelParser {
 		this.tileSize = tileSize;
 	}
 
-	public Applet getApplet() {
-		return applet;
+	public JPanel getApplet() {
+		return frame;
 	}
 
-	public void setApplet(Applet applet) {
-		this.applet = applet;
+	public void setApplet(JPanel applet) {
+		this.frame = applet;
 	}
 	
 	public int getTileWidth(){
@@ -113,7 +114,7 @@ public class LevelParser {
 	public void drawTiles( Graphics g ){
 		for( Sprite s : tileArray ){
 			
-			if( onScreen( s, applet ) ){
+			if( onScreen( s, frame ) ){
 				if ( ! s.draw(g) )
 				g.drawImage(s.getImage(), s.getX(), s.getY(), getTileWidth(), getTileHeight(), getApplet());
 			}
@@ -122,13 +123,13 @@ public class LevelParser {
 	
 	public void updateTiles(){
 		for( Sprite s : tileArray ){
-			if ( onScreen( s, applet ) ){
-				s.update(applet);
+			if ( onScreen( s, frame ) ){
+				s.update(frame);
 			}
 		}
 	}
 	
-	boolean onScreen(Sprite spr, Applet applet){
+	boolean onScreen(Sprite spr, JPanel applet){
 		if ( spr.getX() < applet.getWidth() && spr.getY() < applet.getHeight() ){
 			return true;
 		}
@@ -212,7 +213,7 @@ public class LevelParser {
 			Image img = null;
 			
 			if (tileMapping.containsKey(c)){
-				img = applet.getImage( applet.getCodeBase(), tileMapping.get(c));
+				img = Toolkit.getDefaultToolkit().getImage( tileMapping.get(c));
 			}
 			
 			if ( img != null ){
