@@ -20,7 +20,8 @@ public class RenderPanel extends JPanel implements ActionListener {
 	AstroSprite astro;
 	LevelParser levelParser = new LevelParser(20,20,this);
 	
-	final int FPS = 60; 
+	final int FPS = 100; 
+	int currentFPS = 60; 
 	
 	public RenderPanel(){
 		setBackground(Color.black);
@@ -43,6 +44,8 @@ public class RenderPanel extends JPanel implements ActionListener {
 		astro.update(this);
 		levelParser.updateTiles();
 		
+		currentFPS = FrameCounter.getFramesPerSecond();
+		
 		repaint();
 		
 	}
@@ -51,6 +54,9 @@ public class RenderPanel extends JPanel implements ActionListener {
 	public void paint(Graphics g){
 		
 		super.paint(g);
+		
+		g.setColor(Color.white);
+		g.drawString("FPS: " + currentFPS, 10, 10);
 		
 		levelParser.drawTiles(g);
 		astro.draw(g);
