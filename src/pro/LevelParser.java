@@ -19,6 +19,10 @@ import javax.swing.JPanel;
 public class LevelParser {
 	List<Sprite> tileArray = new ArrayList<Sprite>();
 	Map<Character, String> tileMapping = new HashMap<Character, String>();
+	
+	Point offset = new Point(0,0);
+	Dimension levelSize = new Dimension(0,0);
+
 	Dimension tileSize;
 	JPanel frame;
 
@@ -29,13 +33,14 @@ public class LevelParser {
 		this.tileSize = tileSize;
 		this.frame = frame;
 	}
-	
+
 	public LevelParser( int w, int h, JPanel applet ){
 		this( new Dimension(w,h), applet );
 	}
 
 	/* Getters and Setters */
 
+	/* Parser Lists */
 	
 	public List<Sprite> getTiles() {
 		return tileArray;
@@ -69,6 +74,8 @@ public class LevelParser {
 		this.tileSize = tileSize;
 	}
 
+	/* Members */
+	
 	public JPanel getApplet() {
 		return frame;
 	}
@@ -91,6 +98,40 @@ public class LevelParser {
 	
 	public void setTileHeight(int h){
 		this.tileSize.height = h;
+	}
+	
+	public Point getOffset() {
+		return offset;
+	}
+
+	public void setOffset(Point offset) {
+		this.offset = offset;
+	}
+	
+	/* Level Size */
+	
+	public Dimension getLevelSize() {
+		return levelSize;
+	}
+
+	public void setLevelSize(Dimension levelSize) {
+		this.levelSize = levelSize;
+	}
+	
+	public void setLevelWidth(int w){
+		levelSize.width = w;
+	}
+	
+	public int getLevelWidth(){
+		return levelSize.width;
+	}
+	
+	public void setLevelHeight(int h){
+		levelSize.height = h;
+	}
+	
+	public int getLevelHeight(){
+		return levelSize.height;
 	}
 	
 	/* Collision Detection */
@@ -116,7 +157,10 @@ public class LevelParser {
 			
 			if( onScreen( s, frame ) ){
 				if ( ! s.draw(g) )
-				g.drawImage(s.getImage(), s.getX(), s.getY(), getTileWidth(), getTileHeight(), getApplet());
+				g.drawImage(s.getImage(), 
+						offset.x + s.getX(),
+						offset.y + s.getY(),
+						getTileWidth(), getTileHeight(), getApplet());
 			}
 		}
 	}
@@ -228,6 +272,8 @@ public class LevelParser {
 			}
 			
 			x++;
+			setLevelWidth( Math.max( x*getTileWidth(), getLevelWidth() ) );
+			setLevelHeight( Math.max( y*getTileHeight(), getLevelHeight() ) );
 		}
 	}
 }

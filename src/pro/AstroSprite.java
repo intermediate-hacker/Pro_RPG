@@ -6,6 +6,7 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
 
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class AstroSprite extends Sprite {
@@ -36,11 +37,11 @@ public class AstroSprite extends Sprite {
 		this.moving = moving;
 	}
 
-	public int getFrame() {
+	public int getFrameCount() {
 		return frame;
 	}
 
-	public void setFrame(int frame) {
+	public void setFrameCount(int frame) {
 		this.frame = frame;
 	}
 
@@ -89,12 +90,56 @@ public class AstroSprite extends Sprite {
 			setVectorY(0);
 		}
 		
+		calculateOffset();
 		move( getVectorX(), getVectorY() );
+		
 		levelParser.checkCollision(this);
 		
-		setImage( Toolkit.getDefaultToolkit().getImage( "astro_" + dir + current + ".png" ) );
+		setImage( Toolkit.getDefaultToolkit().getImage( "astro_" + dir + current + ".png" ) );	
+	}
+	
+	public void calculateOffset(){
 		
-		
+		/* Calculate the Offsets for scrolling around the level */
+		if  (isMoving()){
+			
+			if ( getDirection() == LEFT){	
+				if ( getLeft() < (getFrame().getWidth() / 2) ){
+					if ( levelParser.getOffset().x < 0 ){
+							levelParser.getOffset().x += 2;
+							setVectorX(0); /* stop the player from moving */
+					}
+				}
+			}
+			
+			if ( getDirection() == RIGHT ){
+				// if sprite has passed the frame center 
+				if ( getRight() > ( getFrame().getWidth() / 2 ) ){
+					if ( levelParser.getLevelWidth() > levelParser.getOffset().x ){
+						levelParser.getOffset().x -= 2;
+						setVectorX(0);
+					}
+				}
+			}
+			
+			if ( getDirection() == UP ){
+				if ( getTop() < ( getFrame().getHeight() / 2 ) ){
+					if( levelParser.getOffset().y < 0 ){
+						levelParser.getOffset().y += 2;
+						setVectorY(0);
+					}
+				}
+			}
+			
+			if ( getDirection() == DOWN ){
+				if ( getBottom() > ( getFrame().getHeight() / 2 ) ){
+					if ( levelParser.getLevelHeight() > levelParser.getOffset().y ){
+						levelParser.getOffset().y -= 2;
+						setVectorY(0);
+					}
+				}
+			}
+		}
 	}
 	
 	@Override
@@ -104,6 +149,7 @@ public class AstroSprite extends Sprite {
 	}
 	
 	/* Constructors */
+	
 	public AstroSprite(int x, int y, Image img) {
 		super(x, y, img);
 		// TODO Auto-generated constructor stub

@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
@@ -20,7 +21,7 @@ public class Sprite {
 	
 	Dimension size;
 	Image image;
-	Applet applet;
+	JPanel frame;
 	
 	boolean collideable = true;
 
@@ -175,13 +176,13 @@ public class Sprite {
 	}
 
 	/* Other */
-	public Applet getApplet() {
-		return applet;
+	public JPanel getFrame() {
+		return frame;
 	}
 
 
-	public void setApplet(Applet applet) {
-		this.applet = applet;
+	public void setFrame(JPanel frame) {
+		this.frame = frame;
 	}
 	
 	public boolean isCollideable() {
