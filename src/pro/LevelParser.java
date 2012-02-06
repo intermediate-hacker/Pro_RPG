@@ -136,14 +136,14 @@ public class LevelParser {
 	
 	/* Collision Detection */
 	
-	public boolean checkCollision( Sprite plyr ){
+	public boolean checkCollision( AstroSprite plyr ){
 		for( Sprite s : tileArray ){
-			if ( s.isCollidingRect(plyr) ){
+			if ( s.isCollideable() && plyr.isCollidingRect(s) ){
 				
-				if (plyr.getVectorY() < 0) plyr.setTop( s.getBottom() );
-				else if (plyr.getVectorY() > 0) plyr.setBottom( s.getTop() );
-				else if (plyr.getVectorX() < 0) plyr.setLeft( s.getRight() );
-				else if (plyr.getVectorX() > 0) plyr.setRight( s.getLeft() );
+				if (plyr.getVectorY() < 0) plyr.setTop( s.getBottom() + offset.y);
+				else if (plyr.getVectorY() > 0) plyr.setBottom( s.getTop() + offset.y );
+				else if (plyr.getVectorX() < 0) plyr.setLeft( s.getRight() + offset.x);
+				else if (plyr.getVectorX() > 0) plyr.setRight( s.getLeft() + offset.x );
 			}
 		}
 		

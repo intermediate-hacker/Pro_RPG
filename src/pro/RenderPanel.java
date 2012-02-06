@@ -30,7 +30,7 @@ public class RenderPanel extends JPanel implements ActionListener {
 		setFocusable(true);
 		
 		Image img = Toolkit.getDefaultToolkit().getImage( "astro_down_1.png" );
-		astro = new AstroSprite( new Point(20,20), new Dimension(21,29), img );
+		astro = new AstroSprite( new Point(20,180), new Dimension(21,29), img );
 		astro.setFrame(this);
 		
 		astro.setLevelParser(levelParser);

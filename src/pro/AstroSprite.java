@@ -55,6 +55,7 @@ public class AstroSprite extends Sprite {
 
 	/* Overrides */
 	
+	/* Loop */
 	@Override
 	public void update(JPanel app){
 		
@@ -98,14 +99,56 @@ public class AstroSprite extends Sprite {
 		setImage( Toolkit.getDefaultToolkit().getImage( "astro_" + dir + current + ".png" ) );	
 	}
 	
+	@Override
+	public boolean draw(Graphics g){
+		g.drawImage(getImage(), getX(), getY(), null);
+		return true;
+	}
+
+	/* Methods */
+	
+	/* Calculations */
+	
+	/** special collision checking to calculate
+	 * collision with offsets 
+	 */
+	@Override
+	public boolean isCollidingRect(Sprite s){
+		
+		final int offx = levelParser.getOffset().x;
+		final int offy = levelParser.getOffset().y;
+		
+		/* the old bounding box algorithm ... */
+		if ( isCollideable() ){
+			if ( getRight() + offx > s.getLeft()  
+				&& getLeft() + offx < s.getRight() 
+				&& getBottom() - offy > s.getTop() 
+				&& getTop() - offy < s.getBottom() ){
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
 	public void calculateOffset(){
 		
 		/* Calculate the Offsets for scrolling around the level */
+		
+		// constants
+		final int centerx = getFrame().getWidth() / 2;
+		final int centery = getFrame().getHeight() / 2;
+		final int offx = levelParser.getOffset().x;
+		final int offy = levelParser.getOffset().y;
+		final int levelWidth = levelParser.getLevelWidth(); /* not working? */
+		final int levelHeight = levelParser.getLevelHeight(); /* ^^^ */
+		
 		if  (isMoving()){
 			
-			if ( getDirection() == LEFT){	
-				if ( getLeft() < (getFrame().getWidth() / 2) ){
-					if ( levelParser.getOffset().x < 0 ){
+			/* the confusing conditionals 'if' jungle */
+			if ( getDirection() == LEFT){
+				if ( getLeft() < centerx ){
+					if ( offx < 0 ){
 							levelParser.getOffset().x += 2;
 							setVectorX(0); /* stop the player from moving */
 					}
@@ -114,8 +157,8 @@ public class AstroSprite extends Sprite {
 			
 			if ( getDirection() == RIGHT ){
 				// if sprite has passed the frame center 
-				if ( getRight() > ( getFrame().getWidth() / 2 ) ){
-					if ( levelParser.getLevelWidth() > levelParser.getOffset().x ){
+				if ( getRight() > centerx ){
+					if ( levelWidth > offx - centerx ){ // this check is not working.
 						levelParser.getOffset().x -= 2;
 						setVectorX(0);
 					}
@@ -123,8 +166,8 @@ public class AstroSprite extends Sprite {
 			}
 			
 			if ( getDirection() == UP ){
-				if ( getTop() < ( getFrame().getHeight() / 2 ) ){
-					if( levelParser.getOffset().y < 0 ){
+				if ( getTop() < centery ){
+					if( offy < 0 ){
 						levelParser.getOffset().y += 2;
 						setVectorY(0);
 					}
@@ -132,20 +175,16 @@ public class AstroSprite extends Sprite {
 			}
 			
 			if ( getDirection() == DOWN ){
-				if ( getBottom() > ( getFrame().getHeight() / 2 ) ){
-					if ( levelParser.getLevelHeight() > levelParser.getOffset().y ){
+				if ( getBottom() > centery ){
+					if ( levelHeight > offy -centery ){ // fixme
 						levelParser.getOffset().y -= 2;
 						setVectorY(0);
 					}
 				}
 			}
-		}
-	}
-	
-	@Override
-	public boolean draw(Graphics g){
-		g.drawImage(getImage(), getX(), getY(), null);
-		return true;
+			/* you crossed it! hope you comprehended a word or two */
+			
+		} /* if isMoving() */
 	}
 	
 	/* Constructors */
