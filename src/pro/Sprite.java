@@ -213,6 +213,8 @@ public class Sprite {
 				&& getLeft() < s.getRight()
 				&& getBottom() > s.getTop() 
 				&& getTop() < s.getBottom()){
+				
+				System.out.println(true);
 				return true;
 			}
 		}

@@ -30,7 +30,7 @@ public class RenderPanel extends JPanel implements ActionListener {
 		setFocusable(true);
 		
 		Image img = Toolkit.getDefaultToolkit().getImage( "astro_down_1.png" );
-		astro = new AstroSprite( new Point(20,180), new Dimension(21,29), img );
+		astro = new AstroSprite( new Point(20,120), new Dimension(21,29), img );
 		astro.setFrame(this);
 		
 		astro.setLevelParser(levelParser);
@@ -72,7 +72,9 @@ public class RenderPanel extends JPanel implements ActionListener {
         public void keyPressed(KeyEvent e) {
 
             int key = e.getKeyCode();
+            int dir = astro.getDirection();
 
+            if ( astro.isMoving() ) return;
             if ((key == KeyEvent.VK_LEFT)) {
                 astro.setDirection( AstroSprite.LEFT );
                 astro.setMoving(true);
@@ -83,12 +85,12 @@ public class RenderPanel extends JPanel implements ActionListener {
                 astro.setMoving(true);
             }
 
-            if ((key == KeyEvent.VK_UP) ) {
+            if ((key == KeyEvent.VK_UP)  ) {
                 astro.setDirection( AstroSprite.UP );
                 astro.setMoving(true);
             }
 
-            if ((key == KeyEvent.VK_DOWN)) {
+            if ((key == KeyEvent.VK_DOWN)  ) {
                 astro.setDirection( AstroSprite.DOWN );
                 astro.setMoving(true);
             }

@@ -138,12 +138,13 @@ public class LevelParser {
 	
 	public boolean checkCollision( AstroSprite plyr ){
 		for( Sprite s : tileArray ){
-			if ( s.isCollideable() && plyr.isCollidingRect(s) ){
+			if ( s.isCollideable() && s.isCollidingRect(plyr) ){
 				
-				if (plyr.getVectorY() < 0) plyr.setTop( s.getBottom() + offset.y);
-				else if (plyr.getVectorY() > 0) plyr.setBottom( s.getTop() + offset.y );
-				else if (plyr.getVectorX() < 0) plyr.setLeft( s.getRight() + offset.x);
-				else if (plyr.getVectorX() > 0) plyr.setRight( s.getLeft() + offset.x );
+				// if player is moving or the tiles are scrolling...
+				if (plyr.getVectorY() < 0 || offset.y > 0) plyr.setTop( s.getBottom());
+				else if (plyr.getVectorY() > 0 || offset.y < 0) plyr.setBottom( s.getTop());
+				else if (plyr.getVectorX() < 0 || offset.x > 0) plyr.setLeft( s.getRight());
+				else if (plyr.getVectorX() > 0 || offset.x < 0) plyr.setRight( s.getLeft());
 			}
 		}
 		
@@ -155,11 +156,13 @@ public class LevelParser {
 	public void drawTiles( Graphics g ){
 		for( Sprite s : tileArray ){
 			
-			if( onScreen( s, frame ) ){
+			s.move(offset.x, offset.y);
+			
+			if( onScreen( s, frame ) ){ 
 				if ( ! s.draw(g) )
 				g.drawImage(s.getImage(), 
-						offset.x + s.getX(),
-						offset.y + s.getY(),
+						s.getX(),
+						s.getY(),
 						getTileWidth(), getTileHeight(), getApplet());
 			}
 		}

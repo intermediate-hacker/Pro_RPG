@@ -2,10 +2,11 @@
 $ 2 = block_1.gif
 $ B = block_1.gif
 
-BBBBBBBBBBBBBBBB
-                             B
-                             B
-                             B
-                             B
- BB                        B
  BBBBBBBBBBBBBBB
+B                            B
+B                           B
+B                            B
+B                            B
+B                            B
+B                           B
+BBBBBBBBBBBBBBBB

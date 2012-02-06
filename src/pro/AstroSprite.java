@@ -5,8 +5,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.util.List;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class AstroSprite extends Sprite {
@@ -101,7 +101,7 @@ public class AstroSprite extends Sprite {
 	
 	@Override
 	public boolean draw(Graphics g){
-		g.drawImage(getImage(), getX(), getY(), null);
+		g.drawImage(getImage(), getX(), getY(), getWidth(), getHeight(), null);
 		return true;
 	}
 
@@ -115,15 +115,15 @@ public class AstroSprite extends Sprite {
 	@Override
 	public boolean isCollidingRect(Sprite s){
 		
-		final int offx = levelParser.getOffset().x;
-		final int offy = levelParser.getOffset().y;
-		
+		System.out.println( getLeft() + " | " + getTop() + " | " + getRight() + " | " + getBottom());
+		System.out.println( s.getLeft() + " | " + s.getTop() + " | " + s.getRight() + " | " + s.getBottom());
+
 		/* the old bounding box algorithm ... */
 		if ( isCollideable() ){
-			if ( getRight() + offx > s.getLeft()  
-				&& getLeft() + offx < s.getRight() 
-				&& getBottom() - offy > s.getTop() 
-				&& getTop() - offy < s.getBottom() ){
+			if ( getRight() > s.getLeft()
+				&& getLeft() < s.getRight()
+				&& getBottom() > s.getTop() 
+				&& getTop() < s.getBottom() ){
 				return true;
 			}
 		}
@@ -138,48 +138,54 @@ public class AstroSprite extends Sprite {
 		// constants
 		final int centerx = getFrame().getWidth() / 2;
 		final int centery = getFrame().getHeight() / 2;
-		final int offx = levelParser.getOffset().x;
-		final int offy = levelParser.getOffset().y;
 		final int levelWidth = levelParser.getLevelWidth(); /* not working? */
 		final int levelHeight = levelParser.getLevelHeight(); /* ^^^ */
+		
+		final List<Sprite> tiles = levelParser.getTiles();
+		final int levelTop = tiles.get(0).getTop();
+		final int levelLeft = tiles.get(0).getLeft();
+		final int levelBottom = tiles.get( tiles.size() - 1 ).getBottom();
+		final int levelRight = tiles.get( tiles.size() - 1 ).getRight();
+		
+		levelParser.setOffset( new Point(0,0) );
 		
 		if  (isMoving()){
 			
 			/* the confusing conditionals 'if' jungle */
 			if ( getDirection() == LEFT){
 				if ( getLeft() < centerx ){
-					if ( offx < 0 ){
-							levelParser.getOffset().x += 2;
+					//if ( levelTop > 0 ){
+							levelParser.getOffset().x = 2;
 							setVectorX(0); /* stop the player from moving */
-					}
+					//}
 				}
 			}
 			
 			if ( getDirection() == RIGHT ){
 				// if sprite has passed the frame center 
 				if ( getRight() > centerx ){
-					if ( levelWidth > offx - centerx ){ // this check is not working.
-						levelParser.getOffset().x -= 2;
+					//if ( levelWidth > levelRight ){ // this check is not working.
+						levelParser.getOffset().x = -2;
 						setVectorX(0);
-					}
+					//}
 				}
 			}
 			
 			if ( getDirection() == UP ){
 				if ( getTop() < centery ){
-					if( offy < 0 ){
-						levelParser.getOffset().y += 2;
+				//	if( levelLeft < 0 ){
+						levelParser.getOffset().y = 2;
 						setVectorY(0);
-					}
+					//}
 				}
 			}
 			
 			if ( getDirection() == DOWN ){
 				if ( getBottom() > centery ){
-					if ( levelHeight > offy -centery ){ // fixme
-						levelParser.getOffset().y -= 2;
+					//if ( levelHeight > levelBottom ){ // fixme
+						levelParser.getOffset().y = -2;
 						setVectorY(0);
-					}
+					//}
 				}
 			}
 			/* you crossed it! hope you comprehended a word or two */
