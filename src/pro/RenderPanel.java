@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -95,6 +96,10 @@ public class RenderPanel extends JPanel implements ActionListener {
             if ((key == KeyEvent.VK_DOWN)  ) {
                 astro.setDirection( AstroSprite.DOWN );
                 astro.setMoving(true);
+            }
+            
+            if ((key == KeyEvent.VK_Z)){
+            	levelParser.showTileMessage(astro);
             }
             
             if ( key == KeyEvent.VK_ESCAPE ){

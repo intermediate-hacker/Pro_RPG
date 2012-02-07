@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 public class LevelParser {
 	List<Sprite> tileArray = new ArrayList<Sprite>();
 	Map<Character, String> tileMapping = new HashMap<Character, String>();
+	Map<Character, String> messageMapping = new HashMap<Character, String>();
 	
 	Point offset = new Point(0,0);
 	Dimension levelSize = new Dimension(0,0);
@@ -35,9 +36,21 @@ public class LevelParser {
 	}
 
 	public LevelParser( int w, int h, JPanel applet ){
+
 		this( new Dimension(w,h), applet );
 	}
 
+	/* Other Methods */
+	
+	public void reset(){
+		tileArray.clear();
+		tileMapping.clear();
+		messageMapping.clear();
+		
+		offset = new Point(0,0);
+		levelSize = new Dimension(0,0);
+	}
+	
 	/* Getters and Setters */
 
 	/* Parser Lists */
@@ -151,6 +164,60 @@ public class LevelParser {
 		return false;
 	}
 	
+	public Sprite getCollidingTile( Sprite plyr ){
+		for( Sprite s : tileArray ){
+			if ( s.isCollideable() && s.isCollidingRect(plyr) ){
+				return s;
+			}
+		}
+		
+		return null;
+	}
+	
+	public void showTileMessage(AstroSprite plyr){
+		int dx = 0, dy = 0;
+		if ( plyr.getDirection() == AstroSprite.LEFT ){
+			dx = -2;
+		}
+		else if ( plyr.getDirection() == AstroSprite.RIGHT ){
+			dx = 2;
+		}
+		else if ( plyr.getDirection() == AstroSprite.UP ){
+			dy = -2;
+		}
+		else if ( plyr.getDirection() == AstroSprite.DOWN ){
+			dy = 2;
+		}
+		
+		plyr.move(dx, dy);
+		
+		Sprite s = getCollidingTile(plyr);
+		if ( s != null ){
+			Character c = getTileMappingKeyFromSprite( s );
+			
+			if (messageMapping.containsKey(c)){
+				TextMessage.Display( messageMapping.get(c) );
+			}
+		}
+		
+		plyr.move(-dx, -dy);
+	}
+	
+	/* Lists etc. */
+	
+	public Character getTileMappingKeyFromSprite( Sprite s ){
+		/* It definitely has an Image Url, because all tile sprites'
+		 * Image URLs were set in the parseLine method, Note that this
+		 * won't work on ordinary sprites.
+		 */
+		
+		if ( tileMapping.containsValue( s.getImageUrl() ) ){
+			return Utility.getKeyByValue(tileMapping, s.getImageUrl());
+		}
+		
+		return null;
+	}
+	
 	/* Drawing */
 	
 	public void drawTiles( Graphics g ){
@@ -201,6 +268,10 @@ public class LevelParser {
 					
 					String p = tmp[0].substring(1).trim();
 					tileMapping.put( p.charAt(0), tmp[1].trim() );
+					
+					if ( tmp.length > 2 ){
+						messageMapping.put( p.charAt(0), tmp[2].trim() );
+					}
 				}
 				
 			}
@@ -269,6 +340,9 @@ public class LevelParser {
 				Sprite s = new Sprite( new Point( x * getTileWidth(), y * getTileHeight() ),
 						               new Dimension( getTileWidth(), getTileHeight() ),
 						               img);
+				
+				/* c definitely exists, otherwise img would have been null */
+				s.setImageUrl( tileMapping.get(c) );  
 				
 				if ( Character.isDigit(c)) s.setCollideable(false);
 				

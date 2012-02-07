@@ -23,6 +23,8 @@ public class Sprite {
 	Image image;
 	JPanel frame;
 	
+	String imageUrl;
+
 	boolean collideable = true;
 
 	/* Constructors */
@@ -191,6 +193,16 @@ public class Sprite {
 
 	public void setCollideable(boolean collideable) {
 		this.collideable = collideable;
+	}
+	
+	/* Image Url (Optional) */
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 	
 	/* Methods */

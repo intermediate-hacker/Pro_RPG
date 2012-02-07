@@ -20,13 +20,14 @@ public class MainApp extends JFrame{
 	}
 	
 	private MainApp(){
-		setSize(300,300);
+		setSize(800,600);
+		setResizable(false);
 		setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 		
 		getContentPane().add( new RenderPanel() );
 		
-		DisplayMode displayMode = new DisplayMode(800, 600, 16, DisplayMode.REFRESH_RATE_UNKNOWN);
-		//ScreenManager.setFullScreenWindow(displayMode, this);
+		DisplayMode displayMode = new DisplayMode(800, 600, 16, 75);
+//		ScreenManager.setFullScreenWindow(displayMode, this);
 	}
 	
 	public static void main(String[] args){

@@ -1,12 +1,11 @@
 package pro;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Toolkit;
+import javax.swing.JOptionPane;
 
 public class TextMessage {
 	
-	public static void Display( ){
+	public static void Display( String msg ){
+		JOptionPane.showMessageDialog(MainApp.getInstance(), msg);
 	}
 
 }

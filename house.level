@@ -1,0 +1,10 @@
+# Hello World!
+$ B = block_1.png
+$ P = .player
+
+BBBBBBBBB
+B       B
+B       B
+B   P   B
+B       B
+BBBBBBBBB
