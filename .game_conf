@@ -1,2 +1,2 @@
-.player = astro
+.player = player/astro
 .images = data

@@ -98,7 +98,7 @@ public class AstroSprite extends Sprite {
 		
 		setImage( Toolkit.getDefaultToolkit().getImage( ConfigurationLoader.IMAGE_URL
 														+ ConfigurationLoader.PLAYER_URL
-														+ dir + current + ".png" ) );	
+														+ dir + current + ".png" ) );
 	}
 	
 	@Override

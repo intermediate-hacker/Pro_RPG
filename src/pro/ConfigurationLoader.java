@@ -8,9 +8,10 @@ import java.io.IOException;
 public class ConfigurationLoader {
 	
 	public static String IMAGE_URL = "";
+	public static String TILE_URL = "";
 	public static String PLAYER_URL = "";
 	
-	private static String FILE; 
+	private static String FILE = "Empty"; 
 	public static void loadFile(String filename){
 		StringBuilder file = new StringBuilder();
 		try{
@@ -40,13 +41,23 @@ public class ConfigurationLoader {
 	
 	private static void parseFile(){
 		for( String s : FILE.split("\n")){
-			if ( s.trim().startsWith(".player") ){
-				PLAYER_URL = s.split("=")[1].trim() + "_";
+			String v;
+			if ( (v = Parse( s, ".player", "_" )) != null){
+				PLAYER_URL = v;
 			}
 			
-			if ( s.trim().startsWith(".images") ){
-				IMAGE_URL = s.split("=")[1].trim() + "/";
+			if ( (v = Parse( s, ".images", "/" )) != null){
+				IMAGE_URL = v;
 			}
+		}
+	}
+	
+	public static String Parse( String s, String value, String suffix ){
+		if ( s.trim().startsWith(value) ){
+			return ( s.split("=")[1].trim() + suffix );
+		}
+		else{
+			return null;
 		}
 	}
 
