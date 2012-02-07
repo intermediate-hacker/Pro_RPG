@@ -214,7 +214,6 @@ public class Sprite {
 				&& getBottom() > s.getTop() 
 				&& getTop() < s.getBottom()){
 				
-				System.out.println(true);
 				return true;
 			}
 		}

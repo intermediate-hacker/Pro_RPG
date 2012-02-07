@@ -7,6 +7,9 @@ import java.io.IOException;
 
 public class ConfigurationLoader {
 	
+	public static String IMAGE_URL = "";
+	public static String PLAYER_URL = "";
+	
 	private static String FILE; 
 	public static void loadFile(String filename){
 		StringBuilder file = new StringBuilder();
@@ -31,12 +34,18 @@ public class ConfigurationLoader {
 		}catch(FileNotFoundException e){
 			System.out.println("Could not find: " + file);
 		}
+		
+		parseFile();
 	}
 	
 	private static void parseFile(){
 		for( String s : FILE.split("\n")){
 			if ( s.trim().startsWith(".player") ){
-				AstroSprite.IMAGE_URL = s.split("=")[1].trim();
+				PLAYER_URL = s.split("=")[1].trim() + "_";
+			}
+			
+			if ( s.trim().startsWith(".images") ){
+				IMAGE_URL = s.split("=")[1].trim() + "/";
 			}
 		}
 	}

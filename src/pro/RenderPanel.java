@@ -29,6 +29,8 @@ public class RenderPanel extends JPanel implements ActionListener {
 		addKeyListener( new TAdapter() );
 		setFocusable(true);
 		
+		ConfigurationLoader.loadFile(".game_conf");
+		
 		Image img = Toolkit.getDefaultToolkit().getImage( "data/astro_down_1.png" );
 		astro = new AstroSprite( new Point(20,120), new Dimension(21,29), img );
 		astro.setFrame(this);

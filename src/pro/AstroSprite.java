@@ -13,7 +13,6 @@ public class AstroSprite extends Sprite {
 	
 	int frame = 20;
 	public static final int LEFT = 0, RIGHT = 1, UP = 2, DOWN = 3;
-	public static String IMAGE_URL = "astro_";
 	
 	int direction = LEFT;
 	boolean moving = false;
@@ -97,7 +96,9 @@ public class AstroSprite extends Sprite {
 			move( getVectorX(), getVectorY() );
 		}
 		
-		setImage( Toolkit.getDefaultToolkit().getImage( "data/astro_" + dir + current + ".png" ) );	
+		setImage( Toolkit.getDefaultToolkit().getImage( ConfigurationLoader.IMAGE_URL
+														+ ConfigurationLoader.PLAYER_URL
+														+ dir + current + ".png" ) );	
 	}
 	
 	@Override
