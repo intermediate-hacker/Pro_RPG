@@ -1,12 +1,12 @@
 # Hello World!
-$ 2 = block_1.gif
+$ 2 = grass_1.gif
 $ B = block_1.gif
 
- BBBBBBBBBBBBBBB
-B                            B
-B                           B
-B                            B
-B                            B
-B                            B
-B                           B
-BBBBBBBBBBBBBBBB
+ BBBBBBBBBBBBBBBBBBBBBBBBB
+B222222222B
+B222222222B
+B222222222B
+B222222222B
+B222222222B
+B222222222B
+BBBBBBBBBBBBBBBBBBBBBBBBBB

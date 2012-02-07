@@ -260,7 +260,7 @@ public class LevelParser {
 			Image img = null;
 			
 			if (tileMapping.containsKey(c)){
-				img = Toolkit.getDefaultToolkit().getImage( tileMapping.get(c));
+				img = Toolkit.getDefaultToolkit().getImage( "data/"+tileMapping.get(c));
 			}
 			
 			if ( img != null ){

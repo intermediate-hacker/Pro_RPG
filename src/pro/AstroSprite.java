@@ -13,6 +13,7 @@ public class AstroSprite extends Sprite {
 	
 	int frame = 20;
 	public static final int LEFT = 0, RIGHT = 1, UP = 2, DOWN = 3;
+	public static String IMAGE_URL = "astro_";
 	
 	int direction = LEFT;
 	boolean moving = false;
@@ -59,44 +60,44 @@ public class AstroSprite extends Sprite {
 	@Override
 	public void update(JPanel app){
 		
-		frame++;
-		if ( frame > 30 ) frame = 10;
-		
-		String dir;
-		
-		setVectorX(0);
-		if (direction == LEFT){
-			dir = "left_";
-			setVector( new Point(-2,0) );
-		}
-		else if (direction == RIGHT){
-			dir = "right_";
-			setVector( new Point(2, 0) );
-		}
-		else if(direction == UP){
-			dir = "up_";
-			setVector( new Point(0, -2) );
-		}
-		else{
-			dir = "down_";
-			setVector( new Point(0, 2) );
-		}
-		
 		int current = 2;
-		if ( isMoving() ){
-			current = frame/10;
-		}
-		else{
+		String dir = "down_";
+		
+		if (!levelParser.checkCollision(this)){
+			frame++;
+			if ( frame > 30 ) frame = 10;
+			
 			setVectorX(0);
-			setVectorY(0);
+			if (direction == LEFT){
+				dir = "left_";
+				setVector( new Point(-2,0) );
+			}
+			else if (direction == RIGHT){
+				dir = "right_";
+				setVector( new Point(2, 0) );
+			}
+			else if(direction == UP){
+				dir = "up_";
+				setVector( new Point(0, -2) );
+			}
+			else{
+				dir = "down_";
+				setVector( new Point(0, 2) );
+			}
+			
+			if ( isMoving() ){
+				current = frame/10;
+			}
+			else{
+				setVectorX(0);
+				setVectorY(0);
+			}
+			
+			calculateOffset();
+			move( getVectorX(), getVectorY() );
 		}
 		
-		calculateOffset();
-		move( getVectorX(), getVectorY() );
-		
-		levelParser.checkCollision(this);
-		
-		setImage( Toolkit.getDefaultToolkit().getImage( "astro_" + dir + current + ".png" ) );	
+		setImage( Toolkit.getDefaultToolkit().getImage( "data/astro_" + dir + current + ".png" ) );	
 	}
 	
 	@Override
@@ -109,28 +110,6 @@ public class AstroSprite extends Sprite {
 	
 	/* Calculations */
 	
-	/** special collision checking to calculate
-	 * collision with offsets 
-	 */
-	@Override
-	public boolean isCollidingRect(Sprite s){
-		
-		System.out.println( getLeft() + " | " + getTop() + " | " + getRight() + " | " + getBottom());
-		System.out.println( s.getLeft() + " | " + s.getTop() + " | " + s.getRight() + " | " + s.getBottom());
-
-		/* the old bounding box algorithm ... */
-		if ( isCollideable() ){
-			if ( getRight() > s.getLeft()
-				&& getLeft() < s.getRight()
-				&& getBottom() > s.getTop() 
-				&& getTop() < s.getBottom() ){
-				return true;
-			}
-		}
-		
-		return false;
-	}
-	
 	public void calculateOffset(){
 		
 		/* Calculate the Offsets for scrolling around the level */
@@ -138,14 +117,6 @@ public class AstroSprite extends Sprite {
 		// constants
 		final int centerx = getFrame().getWidth() / 2;
 		final int centery = getFrame().getHeight() / 2;
-		final int levelWidth = levelParser.getLevelWidth(); /* not working? */
-		final int levelHeight = levelParser.getLevelHeight(); /* ^^^ */
-		
-		final List<Sprite> tiles = levelParser.getTiles();
-		final int levelTop = tiles.get(0).getTop();
-		final int levelLeft = tiles.get(0).getLeft();
-		final int levelBottom = tiles.get( tiles.size() - 1 ).getBottom();
-		final int levelRight = tiles.get( tiles.size() - 1 ).getRight();
 		
 		levelParser.setOffset( new Point(0,0) );
 		
