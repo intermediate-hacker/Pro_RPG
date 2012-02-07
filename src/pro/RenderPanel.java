@@ -96,6 +96,16 @@ public class RenderPanel extends JPanel implements ActionListener {
                 astro.setDirection( AstroSprite.DOWN );
                 astro.setMoving(true);
             }
+            
+            if ( key == KeyEvent.VK_ESCAPE ){
+            	
+            	if ( ScreenManager.isFullScreen() ){
+            		ScreenManager.restoreScreen();
+            		MainApp.getInstance().setUndecorated(false);
+            	} else{
+            		ScreenManager.resetFullScreenWindow();
+            	}
+            }
         }
         
         @Override
