@@ -26,7 +26,7 @@ public class MainApp extends JFrame{
 		getContentPane().add( new RenderPanel() );
 		
 		DisplayMode displayMode = new DisplayMode(800, 600, 16, DisplayMode.REFRESH_RATE_UNKNOWN);
-		ScreenManager.setFullScreenWindow(displayMode, this);
+		//ScreenManager.setFullScreenWindow(displayMode, this);
 	}
 	
 	public static void main(String[] args){

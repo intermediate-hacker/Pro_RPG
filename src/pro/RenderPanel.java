@@ -99,12 +99,7 @@ public class RenderPanel extends JPanel implements ActionListener {
             
             if ( key == KeyEvent.VK_ESCAPE ){
             	
-            	if ( ScreenManager.isFullScreen() ){
-            		ScreenManager.restoreScreen();
-            		MainApp.getInstance().setUndecorated(false);
-            	} else{
-            		ScreenManager.resetFullScreenWindow();
-            	}
+            	System.exit(0);
             }
         }
         
