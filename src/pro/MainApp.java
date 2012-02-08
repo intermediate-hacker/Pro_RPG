@@ -5,10 +5,9 @@ package pro;
  */
 
 import java.awt.DisplayMode;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
 
 import javax.swing.JFrame;
+import javax.swing.UIManager;
 
 
 public class MainApp extends JFrame{
@@ -20,6 +19,13 @@ public class MainApp extends JFrame{
 	}
 	
 	private MainApp(){
+	
+		try{
+//			UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
+		}catch(Exception e){
+			TextMessage.Display("Failed to set Native look and feel!");
+		}
+		
 		setSize(800,600);
 		setResizable(false);
 		setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
